@@ -1,17 +1,21 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PracticeApp.View;
+using PracticeApp.WebCalls;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PracticeApp
 {
     public partial class App : Application
     {
+        public static RestManager RestAPIManager { get; set; }
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            RestAPIManager = new RestManager(new RestService());
+            MainPage = new REST();
         }
 
         protected override void OnStart()
