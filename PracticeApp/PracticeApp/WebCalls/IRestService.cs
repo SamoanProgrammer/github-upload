@@ -6,6 +6,6 @@ namespace PracticeApp.WebCalls
 {
     public interface IRestService
     {
-        Task<string> GetDataAsync();
+        Task GetDataAsync();
     }
 }

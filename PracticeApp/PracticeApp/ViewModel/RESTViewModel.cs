@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PracticeApp.WebCalls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -32,11 +33,20 @@ namespace PracticeApp.ViewModel
                 }
             }
         }
+
+        public RESTViewModel()
+        {
+            MessagingCenter.Subscribe<RestService, string>(
+            this, Helper.MessengerKeys.RESTResponse, (sender, arg) =>
+            {
+                Response = arg;
+            });
+        }
         public ICommand ConnectCommand => new Command(ConnectToRESTAPI);   
 
-        private void ConnectToRESTAPI()
+        private async void ConnectToRESTAPI()
         {
-            _response = App.RestAPIManager.GetTaskAsync().Result;
+            await App.RestAPIManager.GetTaskAsync();
         }
     }
 }

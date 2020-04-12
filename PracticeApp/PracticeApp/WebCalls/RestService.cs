@@ -4,31 +4,32 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using PracticeApp.Helper;
 
 namespace PracticeApp.WebCalls
 {
     class RestService : IRestService
     {
         HttpClient _client;
-        public string Response { get; set; }
 
         public RestService()
         {
             _client = new HttpClient();
         }
 
-        public async Task<string> GetDataAsync()
+        public async Task GetDataAsync()
         {
-            var uri = new Uri("http://dummy.restapiexample.com/api/v1/employee/1");
+            var uri = new Uri("https://jsonplaceholder.typicode.com/todos/1");
 
-            Response = string.Empty;
             
             try
             {
                 var response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    Response = await response.Content.ReadAsStringAsync();
+                    var responseObj = await response.Content.ReadAsStringAsync();
+                    MessagingCenter.Send(this, MessengerKeys.RESTResponse, responseObj);
                 }
                 else
                 {
@@ -39,8 +40,6 @@ namespace PracticeApp.WebCalls
             {
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
-
-            return Response;
         }
     }
 }

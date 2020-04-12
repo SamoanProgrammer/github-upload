@@ -13,9 +13,9 @@ namespace PracticeApp.WebCalls
             _restService = restService;
         }
 
-        public Task<string> GetTaskAsync()
+        public async Task GetTaskAsync()
         {
-            return _restService.GetDataAsync();
+            await _restService.GetDataAsync();
         }
     }
 }
